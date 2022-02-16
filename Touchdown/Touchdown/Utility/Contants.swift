@@ -7,7 +7,11 @@
 
 import SwiftUI
 
-// COLORS
+// MARK: - PLAYERS
+
+let players: [Player] = Bundle.main.decode("player.json")
+
+// MARK: - COLORS
 
 let colorBackground = Color("ColorBackground")
 let colorGray = Color(UIColor.systemGray4)
