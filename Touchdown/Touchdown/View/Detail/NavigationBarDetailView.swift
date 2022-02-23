@@ -8,9 +8,18 @@
 import SwiftUI
 
 struct NavigationBarDetailView: View {
+	
+	@EnvironmentObject var shop: Shop
+	
     var body: some View {
 		HStack {
-			Button(action: {}) {
+			Button(action: {
+				feedback.impactOccurred()
+				
+				withAnimation(.easeIn) {
+					shop.selectedProduct = nil
+				}
+			}) {
 				Image(systemName: "chevron.left")
 					.font(.title)
 					.foregroundColor(.white)

@@ -9,12 +9,13 @@ import SwiftUI
 
 struct QuantityFavoriteDetailView: View {
 	
-	@State private var quantity: Int = 0
+	@Binding var quantity: Int
 	
     var body: some View {
 		HStack(alignment: .center, spacing: 6) {
 			Button(action: {
 				if quantity > 0 {
+					feedback.impactOccurred()
 					quantity -= 1
 				}
 			}) {
@@ -26,6 +27,7 @@ struct QuantityFavoriteDetailView: View {
 				.frame(minWidth: 36)
 			
 			Button(action: {
+				feedback.impactOccurred()
 				quantity += 1
 			}) {
 				Image(systemName: "plus.circle")
@@ -33,7 +35,9 @@ struct QuantityFavoriteDetailView: View {
 			
 			Spacer()
 			
-			Button(action: {}) {
+			Button(action: {
+				feedback.impactOccurred()
+			}) {
 				Image(systemName: "heart.circle")
 					.foregroundColor(.pink)
 			}
@@ -46,7 +50,7 @@ struct QuantityFavoriteDetailView: View {
 
 struct QuantityFavoriteDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        QuantityFavoriteDetailView()
+		QuantityFavoriteDetailView(quantity: .constant(0))
 			.previewLayout(.sizeThatFits)
 			.padding()
     }

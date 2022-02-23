@@ -21,3 +21,10 @@ struct Product: Codable, Identifiable {
 	
 	var formattedPrice: String { "$\(price)" }
 }
+
+extension Product: Hashable {
+	func hash(into hasher: inout Hasher) {
+		hasher.combine(id)
+		hasher.combine(name)
+	}
+}
