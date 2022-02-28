@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct NavigationBarView: View {
+	
 	// MARK: - PROPERTIES
+	
+	@EnvironmentObject var shop: Shop
 	
 	@State private var isAnimated: Bool = false
 	
@@ -37,17 +40,19 @@ struct NavigationBarView: View {
 			Spacer()
 			
 			Button {
-				
+
 			} label: {
 				ZStack {
 					Image(systemName: "cart")
 						.font(.title)
 					.foregroundColor(.black)
 					
-					Circle()
-						.fill(.red)
-						.frame(width: 14, height: 14, alignment: .center)
-						.offset(x: 13, y: -10)
+					if shop.itemsInCart {
+						Circle()
+							.fill(.red)
+							.frame(width: 14, height: 14, alignment: .center)
+							.offset(x: 13, y: -10)
+					}
 				} //: ZSTACK
 			} //: BUTTON
 
@@ -59,6 +64,7 @@ struct NavigationBarView: View {
 struct NavigationBarView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationBarView()
+			.environmentObject(Shop())
 			.previewLayout(.sizeThatFits)
 			.padding()
     }

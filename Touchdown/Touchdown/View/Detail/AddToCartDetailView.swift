@@ -13,16 +13,27 @@ struct AddToCartDetailView: View {
 	
 	@Binding var quantity: Int
 	
+	@State private var wasAdded: Bool = false
+	
     var body: some View {
 		Button(action: {
 			feedback.impactOccurred()
-			shop.addProducts(quantity: quantity)
+			addProductQuantity()
 		}) {
 			Spacer()
-			Text("ADD TO CART")
-				.font(.system(.title2, design: .rounded))
-				.fontWeight(.bold)
-				.foregroundColor(.white)
+			if wasAdded {
+				HStack {
+					Text("ADDED")
+					Image(systemName: "checkmark.circle")
+				}
+				.font(.system(size: 20, weight: .bold))
+				.foregroundColor(Color.white)
+			} else {
+				Text("ADD TO CART")
+					.font(.system(size: 20, weight: .bold))
+					.fontWeight(.bold)
+					.foregroundColor(.white)
+			}
 			Spacer()
 		}
 		.padding(15)
@@ -33,7 +44,17 @@ struct AddToCartDetailView: View {
 				blue: shop.selectedProduct?.blue ?? sampleProduct.blue)
 		)
 		.clipShape(Capsule())
+		.disabled(wasAdded)
     }
+	
+	private func addProductQuantity() {
+		wasAdded = true
+		shop.addProducts(quantity: quantity)
+		
+		DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+			wasAdded = false
+		}
+	}
 }
 
 struct AddToCartDetailView_Previews: PreviewProvider {

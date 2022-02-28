@@ -15,6 +15,7 @@ class Shop: ObservableObject {
 			showingProduct = selectedProduct != nil ? true : false
 		}
 	}
+	@Published private(set) var itemsInCart: Bool = false
 	
 	private(set) var productQuantity: [Product: Int] = [:]
 	
@@ -25,12 +26,13 @@ class Shop: ObservableObject {
 			return
 		}
 
-		
 		if (productQuantity[selectedProduct] != nil) {
 			productQuantity[selectedProduct]! += quantity
 		} else {
 			productQuantity[selectedProduct] = quantity
 		}
+		
+		if !productQuantity.isEmpty { itemsInCart = true }
 		
 		print("Updated Quantity for \(selectedProduct.name): \(productQuantity[selectedProduct]!)")
 	}
